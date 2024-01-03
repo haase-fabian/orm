@@ -200,6 +200,20 @@ class Query extends AbstractQuery
     }
 
     /**
+     * Get query parameter mappings.
+     *
+     * @return mixed[][]
+     * @psalm-return array{0: list<mixed>, 1: array}
+     *
+     * @throws Query\QueryException
+     */
+    public function getSQLParameters(): array {
+        $this->parse();
+        $paramMappings = $this->parserResult->getParameterMappings();
+        return $this->processParameterMappings($paramMappings);
+    }
+    
+    /**
      * Returns the corresponding AST for this DQL query.
      *
      * @return SelectStatement|UpdateStatement|DeleteStatement
